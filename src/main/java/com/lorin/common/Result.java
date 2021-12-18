@@ -16,15 +16,22 @@ import java.sql.ResultSet;
 @AllArgsConstructor
 public class Result {
     private Integer code;
-    private String data;
     private String msg;
+    private Object data;
 
+    public static Result success(Object data, String msg) {
+        return new Result(200, msg, data);
+    }
 
-    public static Result success(String data, String msg) {
-        return new Result(200, data, msg);
+    public static Result success(Object data) {
+        return new Result(200, "操作成功", data);
+    }
+
+    public static Result fail(String msg) {
+        return new Result(400, msg, "");
     }
 
     public static Result fail(Integer code, String msg) {
-        return new Result(code, null, msg);
+        return new Result(code, msg, "");
     }
 }

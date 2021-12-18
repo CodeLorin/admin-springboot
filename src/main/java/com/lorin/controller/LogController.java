@@ -3,7 +3,7 @@ package com.lorin.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Controller;
  * </p>
  *
  * @author lorin
- * @since 2021-12-15
+ * @since 2021-12-17
  */
-@Controller
-@RequestMapping("/student")
-public class StudentController {
+@RestController
+@RequestMapping("/log")
+public class LogController {
 
 }

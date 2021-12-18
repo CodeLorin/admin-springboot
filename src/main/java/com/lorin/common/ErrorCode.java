@@ -13,13 +13,14 @@ public enum ErrorCode {
     /**
      * 错误参数
      */
-    IS_BAN(401, "无访问权限"),
-    NO_PERMISSION(403, "禁止"),
+    UNAUTHORIZED(401, "登录已经过期"),
+    NO_PERMISSION(403, "权限不足,禁止访问"),
     PARAMS_ERROR(10001, "输入的参数有误"),
     ACCOUNT_PWD_ERROR(10002, "用户名或密码错误"),
     TOKEN_ERROR(10003, "token不合法"),
-    ACCOUNT_EXIST(10004, "账号已存在"),
-    SESSION_TIME_OUT(90001, "登录会话超时"),
+    TOKEN_TIMEOUT(10003, "token已过期"),
+    ACCOUNT_EXIST(10005, "账号已存在"),
+    FILE_NOT_SELECT(20001, "没有选择文件"),
     NO_LOGIN(90002, "未登录"),
     ;
 
