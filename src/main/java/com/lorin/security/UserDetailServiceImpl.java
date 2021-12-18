@@ -3,6 +3,7 @@ package com.lorin.security;
 import com.lorin.entity.User;
 import com.lorin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,10 +26,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
     UserService userService;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException,LockedException {
         User user = userService.getUserByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("用户名或者密码不正确");
+        }
+        if (user.getStatus() == 0) {
+            throw new LockedException("用户被锁定,请联系管理员");
         }
         return new AccountUser(user.getId(), user.getUsername(), user.getPassword(), getUserAuthority(user.getId()));
     }

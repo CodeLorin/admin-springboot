@@ -14,9 +14,9 @@ public enum ErrorCode {
      * 错误参数
      */
     UNAUTHORIZED(401, "登录已经过期"),
-    NO_PERMISSION(403, "权限不足,禁止访问"),
+    NO_PERMISSION(403, "权限不足,禁止访问,请联系管理员"),
     PARAMS_ERROR(10001, "输入的参数有误"),
-    ACCOUNT_PWD_ERROR(10002, "用户名或密码错误"),
+    LOGIN_ERROR(10002, "登录失败"),
     TOKEN_ERROR(10003, "token不合法"),
     TOKEN_TIMEOUT(10003, "token已过期"),
     ACCOUNT_EXIST(10005, "账号已存在"),

@@ -27,7 +27,8 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         response.setContentType("application/json; charset=UTF-8");
         ServletOutputStream outputStream = response.getOutputStream();
-        Result result = Result.fail(ErrorCode.ACCOUNT_PWD_ERROR.getCode(), ErrorCode.ACCOUNT_PWD_ERROR.getMsg());
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        Result result = Result.fail(ErrorCode.LOGIN_ERROR.getCode(), exception.getMessage());
         ObjectMapper mapper = new ObjectMapper();
         outputStream.write(mapper.writeValueAsString(result).getBytes(StandardCharsets.UTF_8));
         outputStream.flush();
