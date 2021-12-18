@@ -10,6 +10,8 @@ import com.lorin.entity.Menu;
 import com.lorin.entity.RoleMenu;
 import com.lorin.entity.User;
 import com.lorin.service.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,7 @@ import java.util.List;
  * @author lorin
  * @since 2021-12-17
  */
+@Api(value = "菜单Controller", tags = {"菜单路由接口"})
 @RestController
 @RequestMapping("/sys/menu")
 
@@ -40,6 +43,8 @@ public class MenuController {
     @Autowired
     RoleMenuService roleMenuService;
 
+    @ApiOperation(value = "获取菜单和权限信息")
+    @LogAnnotation(module = "菜单", operation = "获取菜单和权限信息")
     @GetMapping("/nav")
     public Result nav(Principal principal) {
         User user = userService.getUserByUsername(principal.getName());
@@ -49,7 +54,7 @@ public class MenuController {
 
         //获取导航信息
         List<MenuDto> navs = menuService.getUserNavById(user.getId());
-        if (navs==null){
+        if (navs == null) {
             return Result.success("");
         }
         return Result.success(MapUtil
@@ -58,6 +63,8 @@ public class MenuController {
                 .put("nav", navs)
                 .build());
     }
+
+    @ApiOperation(value = "获取选中菜单信息")
     @LogAnnotation(module = "菜单", operation = "获取选中菜单信息")
     @PreAuthorize("hasAuthority('sys:menu:list')")
     @GetMapping("/info/{id}")
@@ -65,6 +72,7 @@ public class MenuController {
         return Result.success(menuService.getById(id), "获取选中菜单信息成功");
     }
 
+    @ApiOperation(value = "获取所有菜单信息")
     @LogAnnotation(module = "菜单", operation = "获取所有菜单信息")
     @PreAuthorize("hasAuthority('sys:menu:list')")
     @GetMapping("/list")
@@ -73,6 +81,7 @@ public class MenuController {
         return Result.success(menus, "获取所有菜单信息成功");
     }
 
+    @ApiOperation(value = "添加菜单信息")
     @LogAnnotation(module = "菜单", operation = "添加菜单信息")
     @PreAuthorize("hasAuthority('sys:menu:save')")
     @PostMapping("/add")
@@ -81,7 +90,7 @@ public class MenuController {
         menuService.save(menu);
         return Result.success(menu, "添加菜单信息成功");
     }
-
+    @ApiOperation(value = "更新菜单信息")
     @LogAnnotation(module = "菜单", operation = "更新菜单信息")
     @PreAuthorize("hasAuthority('sys:menu:update')")
     @PutMapping("/update")
@@ -91,7 +100,7 @@ public class MenuController {
         userService.clearUserAuthorityByMenuId(menu.getId());
         return Result.success(menu, "更新菜单信息成功");
     }
-
+    @ApiOperation(value = "删除菜单信息")
     @LogAnnotation(module = "菜单", operation = "删除菜单信息")
     @PreAuthorize("hasAuthority('sys:menu:delete')")
     @DeleteMapping("/del/{id}")

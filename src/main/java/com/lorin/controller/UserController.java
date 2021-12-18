@@ -14,6 +14,8 @@ import com.lorin.service.RoleService;
 import com.lorin.service.UserRoleService;
 import com.lorin.service.UserService;
 import com.lorin.utils.PageUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,6 +39,7 @@ import java.util.List;
  * @since 2021-12-17
  */
 @RestController
+@Api(value = "用户Controller", tags = {"用户路由接口"})
 @RequestMapping("/sys/user")
 public class UserController {
     @Autowired
@@ -50,6 +53,7 @@ public class UserController {
     @Autowired
     UserRoleService userRoleService;
 
+    @ApiOperation(value = "获取选中用户信息")
     @LogAnnotation(module = "用户", operation = "获取选中用户信息")
     @GetMapping("/info/{id}")
     @PreAuthorize("hasAuthority('sys:user:list')")
@@ -61,6 +65,7 @@ public class UserController {
         return Result.success(user, "获取用户成功");
     }
 
+    @ApiOperation(value = "获取全部用户信息")
     @LogAnnotation(module = "用户", operation = "获取全部用户信息")
     @GetMapping("/list")
     @PreAuthorize("hasAuthority('sys:user:list')")
@@ -72,7 +77,8 @@ public class UserController {
         return Result.success(pageData, "获取全部用户信息成功");
     }
 
-    @LogAnnotation(module = "用户", operation = "增加用户")
+    @ApiOperation(value = "增加用户信息")
+    @LogAnnotation(module = "用户", operation = "增加用户信息")
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('sys:user:save')")
     public Result add(@Validated @RequestBody User user) {
@@ -83,7 +89,8 @@ public class UserController {
         return Result.success("", "增加用户成功");
     }
 
-    @LogAnnotation(module = "用户", operation = "更新用户")
+    @ApiOperation(value = "更新用户信息")
+    @LogAnnotation(module = "用户", operation = "更新用户信息")
     @PutMapping("/update")
     @PreAuthorize("hasAuthority('sys:user:update')")
     public Result update(@Validated @RequestBody User user) {
@@ -92,6 +99,7 @@ public class UserController {
         return Result.success("", "更新用户成功");
     }
 
+    @ApiOperation(value = "删除用户信息")
     @LogAnnotation(module = "用户", operation = "删除用户")
     @Transactional
     @DeleteMapping("/delete")
@@ -102,6 +110,7 @@ public class UserController {
         return Result.success("", "删除用户成功");
     }
 
+    @ApiOperation(value = "分配角色信息")
     @LogAnnotation(module = "用户", operation = "分配角色")
     @Transactional
     @PostMapping("/role/{id}")
@@ -126,10 +135,11 @@ public class UserController {
         return Result.success("", "分配角色成功");
     }
 
+    @ApiOperation(value = "修改用户密码")
     @LogAnnotation(module = "用户", operation = "修改密码")
     @Transactional
     @PreAuthorize("hasAuthority('sys:user:repass')")
-    @PostMapping("repass")
+    @PutMapping("repass")
     public Result rePassword(@RequestBody PasswordDto passwordDto) {
         User user = userService.getById(passwordDto.getId());
         user.setPassword(bCryptPasswordEncoder.encode(passwordDto.getPassword()));

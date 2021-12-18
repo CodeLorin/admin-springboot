@@ -5,6 +5,8 @@ import com.lorin.common.Result;
 import com.lorin.common.dto.UserInfoDto;
 import com.lorin.entity.User;
 import com.lorin.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,10 +24,12 @@ import java.security.Principal;
 
 
 @RestController
+@Api(value = "用户信息Controller", tags = {"用户信息路由接口"})
 public class UserInfoController {
     @Autowired
     UserService userService;
 
+    @ApiOperation(value = "获取全部用户信息")
     @GetMapping("/sys/userInfo")
     public Result userInfo(Principal principal) {
         UserInfoDto userInfoDto = new UserInfoDto();

@@ -48,8 +48,6 @@ public class UploadService {
             String filePath = staticPath + "/" + fileName;
             Map<String, Object> map = new HashMap<>();
             map.put("url", filePath);
-            map.put("size", multipartFile.getSize());
-            map.put("ext", suffix);
             map.put("filename", fileName);
             return map;
         } catch (IOException e) {

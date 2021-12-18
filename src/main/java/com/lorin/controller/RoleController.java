@@ -14,6 +14,8 @@ import com.lorin.service.RoleService;
 import com.lorin.service.UserRoleService;
 import com.lorin.service.UserService;
 import com.lorin.utils.PageUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,6 +39,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/sys/role")
+@Api(value = "角色Controller", tags = {"角色路由接口"})
 public class RoleController {
     @Autowired
     RoleService roleService;
@@ -49,6 +52,7 @@ public class RoleController {
     @Autowired
     UserRoleService userRoleService;
 
+    @ApiOperation(value = "获取角色信息")
     @LogAnnotation(module = "角色", operation = "获取角色信息")
     @PreAuthorize("hasAuthority('sys:role:list')")
     @GetMapping("/info/{id}")
@@ -61,6 +65,7 @@ public class RoleController {
         return Result.success(role, "获取角色信息成功");
     }
 
+    @ApiOperation(value = "获取全部角色信息")
     @LogAnnotation(module = "角色", operation = "获取全部角色信息")
     @PreAuthorize("hasAuthority('sys:role:list')")
     @GetMapping("/list")
@@ -69,6 +74,7 @@ public class RoleController {
         return Result.success(pageData, "获取全部角色信息成功");
     }
 
+    @ApiOperation(value = "保存角色信息")
     @LogAnnotation(module = "角色", operation = "保存角色信息")
     @PreAuthorize("hasAuthority('sys:role:save')")
     @PostMapping("/add")
@@ -80,6 +86,7 @@ public class RoleController {
         return Result.success(role, "添加角色成功");
     }
 
+    @ApiOperation(value = "更新角色信息")
     @LogAnnotation(module = "角色", operation = "更新角色信息")
     @PreAuthorize("hasAuthority('sys:role:update')")
     @PutMapping("/update")
@@ -91,6 +98,7 @@ public class RoleController {
         return Result.success(role, "更新角色成功");
     }
 
+    @ApiOperation(value = "删除角色信息")
     @LogAnnotation(module = "角色", operation = "删除角色信息")
     @PreAuthorize("hasAuthority('sys:role:delete')")
     @DeleteMapping("/delete")
@@ -108,7 +116,8 @@ public class RoleController {
         return Result.success("", "删除角色成功");
     }
 
-    @LogAnnotation(module = "角色", operation = "分配角色信息")
+    @ApiOperation(value = "分配角色权限")
+    @LogAnnotation(module = "角色", operation = "分配角色权限")
     @PreAuthorize("hasAuthority('sys:role:perm')")
     @PostMapping("/perm/{id}")
     @Transactional

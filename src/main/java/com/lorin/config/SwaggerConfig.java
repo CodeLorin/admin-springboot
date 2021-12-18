@@ -42,11 +42,11 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         //相关信息
-        return new ApiInfo("lorin-admin后台管理系统接口文档",
-                "如有疑问，请联系开发工程师lorin",
+        return new ApiInfo("serialization后台管理系统接口文档",
+                "如有疑问，请联系开发工程师 lorin",
                 "1.0",
                 "https://www.codelorin.cn",
-                new Contact("CodeLorin", "https://www.codelorin.cn", "bylorin@163.com"),
+                new Contact("lorin", "https://www.codelorin.cn", "bylorin@163.com"),
                 "Apache 2.0",
                 "http://www.apache.org/licenses/LICENSE-2.0",
                 new ArrayList());
