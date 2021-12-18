@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -12,7 +15,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author lorin
@@ -72,4 +75,8 @@ public class Log implements Serializable {
     @ApiModelProperty("请求耗时")
     @TableField("excute_time")
     private String excuteTime;
+
+    @ApiModelProperty("创建时间")
+    @TableField("create_time")
+    private LocalDateTime createTime;
 }

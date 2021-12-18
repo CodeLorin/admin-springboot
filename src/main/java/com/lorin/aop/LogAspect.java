@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.time.LocalDateTime;
 
 /**
  * TODO
@@ -106,6 +107,7 @@ public class LogAspect {
         myLog.setUa(os + " | " + browser);
         myLog.setRes(JSONUtil.toJsonStr(result));
         myLog.setExcuteTime(String.valueOf(time));
+        myLog.setCreateTime(LocalDateTime.now());
         logService.insertLog(myLog);
     }
 }
