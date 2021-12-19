@@ -6,6 +6,7 @@ import com.arcsoft.face.enums.DetectOrient;
 import com.arcsoft.face.enums.ErrorInfo;
 import com.arcsoft.face.toolkit.ImageInfo;
 
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +24,7 @@ public class FaceEngineUtil {
     private static final String appId = "AtjpQHXSfL56XWTsVF92nesPmfvmo7n4VnP6DemSKyrG";
     private static final String sdkKey = "ARtQbVnaWsExAtGPMi2uwky7PWVtdSePaYvMuQR86yZJ";
     private static final String libPath = "C:\\Users\\lcary\\Desktop\\web-backend\\src\\main\\resources\\lib\\WIN64";
-    private static final String path = "C:\\Users\\lcary\\Desktop\\web-backend\\src\\main\\resources\\static\\file";
+    private static final String path = "C:\\Users\\lcary\\Desktop\\web-backend\\src\\main\\resources\\static\\file\\face\\";
     private static FaceEngine faceEngine;
     private static int errorCode;
     private static EngineConfiguration engineConfiguration;
@@ -116,16 +117,16 @@ public class FaceEngineUtil {
         this.setEngine();
         this.configEngine();
         this.initEngine();
-
+        imgUrl = "C:\\Users\\lcary\\Desktop\\web-backend\\src\\main\\resources\\static\\file\\temp\\" + imgUrl;
         File f = new File(path);
         File[] fa = f.listFiles();
         if (fa != null) {
             for (File fs : fa) {
-                String img2 = path + "\\" + fs.getName();
+                String img2 = path + fs.getName();
                 float face = this.face(imgUrl, img2);
                 System.out.println("相似率为: " + face);
                 if (face > 0.8) {
-                    System.out.println("识别成功,图片路径是: " + fs.getName());
+                    System.out.println("识别成功,人脸数据: " + fs.getName());
                     return fs.getName();
                 }
             }
@@ -140,9 +141,11 @@ public class FaceEngineUtil {
     public static void main(String[] args) {
 
         FaceEngineUtil faceEngineUtil = new FaceEngineUtil();
-        String run = faceEngineUtil.run("");
+
+        String run = faceEngineUtil.run("WIN_20211117_22_17_23_Pro.jpg");
         if (!"false".equals(run)) {
             System.out.println("识别成功");
+            System.out.println(run);
         }
     }
 }

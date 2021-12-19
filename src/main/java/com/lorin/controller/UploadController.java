@@ -6,6 +6,7 @@ import com.lorin.aop.LogAnnotation;
 import com.lorin.common.ErrorCode;
 import com.lorin.common.Result;
 import com.lorin.service.UploadService;
+import com.lorin.utils.FaceEngineUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Map;
 
 /**
  * TODO
@@ -31,15 +34,15 @@ public class UploadController {
     @Autowired
     private UploadService uploadService;
 
-    @ApiOperation(value = "文件上传接口")
-    @LogAnnotation(module = "文件上传上传", operation = "文件上传上传接口")
-    @PostMapping("/upload")
+
+    @ApiOperation(value = "人脸上传接口")
+    @LogAnnotation(module = "人脸上传上传", operation = "人脸上传接口")
+    @PostMapping("/upload/face")
     @ResponseBody
-    public Result upload(@RequestParam("file") MultipartFile multipartFile) throws JsonProcessingException {
+    public Result uploadFace(@RequestParam("file") MultipartFile multipartFile) throws JsonProcessingException {
         if (multipartFile.isEmpty()) {
             return Result.fail(ErrorCode.FILE_NOT_SELECT.getMsg());
         }
-        ObjectMapper mapper = new ObjectMapper();
-        return Result.success(mapper.writeValueAsString(uploadService.uploadImg(multipartFile)), "文件上传成功");
+        return Result.success(uploadService.uploadImg(multipartFile, "face"), "文件上传成功");
     }
 }

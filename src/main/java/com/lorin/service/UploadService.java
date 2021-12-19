@@ -15,6 +15,7 @@ import java.util.UUID;
 /**
  * TODO
  * 文件上传服务类
+ *
  * @author lorin
  * @date 2021/12/15 20:42
  */
@@ -27,7 +28,7 @@ public class UploadService {
     @Value("${file.staticPatternPath}")
     private String staticPath;
 
-    public Map<String, Object> uploadImg(MultipartFile multipartFile) {
+    public Map<String, Object> uploadImg(MultipartFile multipartFile, String dir) {
         System.out.println(uploadPath);
         System.out.println(staticPath);
         try {
@@ -39,13 +40,13 @@ public class UploadService {
 
 
             //拼接
-            File targetPath = new File(uploadPath);
+            File targetPath = new File(uploadPath + dir);
             if (!targetPath.exists()) {
                 targetPath.mkdirs();
             }
             File file = new File(targetPath, fileName);
             multipartFile.transferTo(file);
-            String filePath = staticPath + "/" + fileName;
+            String filePath = staticPath + "/" + dir + "/" + fileName;
             Map<String, Object> map = new HashMap<>();
             map.put("url", filePath);
             map.put("filename", fileName);

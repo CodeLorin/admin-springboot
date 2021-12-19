@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -44,6 +45,7 @@ public class LogController {
 
     @PreAuthorize("hasAuthority('sys:log:delete')")
     @ApiOperation(value = "删除日志信息")
+    @Transactional
     @LogAnnotation(module = "日志", operation = "删除日志")
     @DeleteMapping("/delete")
     public Result delete(@RequestBody Long[] ids) {

@@ -62,6 +62,7 @@ public class UserController {
         Assert.notNull(user, "找不到该用户");
         List<Role> roleList = roleService.listRolesByUserId(id);
         user.setRoles(roleList);
+        user.setPassword("");
         return Result.success(user, "获取用户成功");
     }
 
@@ -73,6 +74,7 @@ public class UserController {
         Page<User> pageData = userService.page(pageUtil.getPage(), new QueryWrapper<User>().like(StringUtils.isNotBlank(query), "username", query));
         pageData.getRecords().forEach(user -> {
             user.setRoles(roleService.listRolesByUserId(user.getId()));
+            user.setPassword("");
         });
         return Result.success(pageData, "获取全部用户信息成功");
     }

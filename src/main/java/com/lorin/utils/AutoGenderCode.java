@@ -21,7 +21,8 @@ public class AutoGenderCode {
     public static void main(String[] args) {
 
         List<String> tables = new ArrayList<>();
-        tables.add("sys_log");
+        tables.add("sys_attendance");
+        tables.add("sys_attendance_record");
 
         FastAutoGenerator.create("jdbc:mysql://localhost:3306/lorin_admin_sys", "root", "123456")
                 .globalConfig(builder -> {
