@@ -1,7 +1,7 @@
 package com.lorin.utils;
 
-import cn.hutool.http.useragent.UserAgent;
-import cn.hutool.http.useragent.UserAgentUtil;
+
+import eu.bitwalker.useragentutils.UserAgent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.http.HttpServletRequest;
@@ -98,7 +98,7 @@ public class IpUtils {
      * @return {@link UserAgent} 访问设备
      */
     public static UserAgent getUserAgent(HttpServletRequest request) {
-        return UserAgentUtil.parse(request.getHeader("User-Agent"));
+        return UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
     }
 
 }

@@ -109,8 +109,7 @@ public class StudentController {
     @PutMapping("/update")
     @PreAuthorize("hasAuthority('sys:student:update')")
     public Result update(@Validated @RequestBody Student student) {
-        String pwd = passwordEncoder.encode(Const.DEFAULT_PASSWORD);
-        student.setPassword(pwd);
+        student.setPassword(null);
         studentService.updateById(student);
         return Result.success("", "更新学生成功");
     }

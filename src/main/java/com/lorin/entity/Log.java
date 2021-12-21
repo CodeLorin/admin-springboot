@@ -45,8 +45,8 @@ public class Log implements Serializable {
     private String classMethod;
 
     @ApiModelProperty("参数")
-    @TableField("prams")
-    private String prams;
+    @TableField("params")
+    private String params;
 
     @ApiModelProperty("请求用户")
     @TableField("username")
@@ -64,10 +64,13 @@ public class Log implements Serializable {
     @TableField("location")
     private String location;
 
-    @ApiModelProperty("useragent")
-    @TableField("ua")
-    private String ua;
+    @ApiModelProperty("browser")
+    @TableField("browser")
+    private String browser;
 
+    @ApiModelProperty("操作系统")
+    @TableField("os")
+    private String os;
     @ApiModelProperty("返回值")
     @TableField("res")
     private String res;

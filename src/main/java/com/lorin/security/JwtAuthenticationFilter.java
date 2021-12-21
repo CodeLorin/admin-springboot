@@ -54,24 +54,23 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             return;
         }
         Claims claim = jwtUtils.getClaimByToken(jwt);
-        boolean flag = redisUtil.hasKey("TOKEN_" + jwt);
-        if (!flag) {
-            throw new JwtException(ErrorCode.TOKEN_TIMEOUT.getMsg());
-        }
         /**
          * jwt非法或者过期
          */
 
-//        else {
-//
-//            if (claim == null) {
-//                throw new JwtException(ErrorCode.TOKEN_ERROR.getMsg());
-//            }
-//
-//            if (jwtUtils.isTokenExpired(claim)) {
-//                throw new JwtException(ErrorCode.TOKEN_TIMEOUT.getMsg());
-//            }
+//        if (claim == null) {
+//            throw new JwtException(ErrorCode.TOKEN_ERROR.getMsg());
 //        }
+//        if (jwtUtils.isTokenExpired(claim)) {
+//            throw new JwtException(ErrorCode.TOKEN_TIMEOUT.getMsg());
+//        }
+        /**
+         * 去redis里面查找
+         */
+        boolean flag = redisUtil.hasKey("TOKEN_" + jwt);
+        if (!flag) {
+            throw new JwtException(ErrorCode.TOKEN_TIMEOUT.getMsg());
+        }
 
         String username = claim.getSubject();
         /**

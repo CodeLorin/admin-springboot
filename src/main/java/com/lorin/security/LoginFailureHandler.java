@@ -28,7 +28,12 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         response.setContentType("application/json; charset=UTF-8");
         ServletOutputStream outputStream = response.getOutputStream();
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        Result result = Result.fail(ErrorCode.LOGIN_ERROR.getCode(), exception.getMessage());
+        Result result = null;
+        if ("Bad credentials".equals(exception.getMessage())) {
+            result = Result.fail(ErrorCode.LOGIN_ERROR.getCode(), "用户名或者密码错误");
+        } else {
+            result = Result.fail(ErrorCode.LOGIN_ERROR.getCode(), exception.getMessage());
+        }
         ObjectMapper mapper = new ObjectMapper();
         outputStream.write(mapper.writeValueAsString(result).getBytes(StandardCharsets.UTF_8));
         outputStream.flush();

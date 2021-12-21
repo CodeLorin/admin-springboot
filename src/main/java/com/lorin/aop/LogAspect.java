@@ -1,14 +1,15 @@
 package com.lorin.aop;
 
-import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lorin.common.Result;
 import com.lorin.entity.Log;
 import com.lorin.service.LogService;
 import com.lorin.utils.HttpContextUtil;
 import com.lorin.utils.IpUtils;
 import com.lorin.utils.UserUtil;
+import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -80,6 +81,7 @@ public class LogAspect {
         log.info("user:{}", UserUtil.getLoginUser());
         //获取request 设置IP地址
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
+
         log.info("requests-methods: {}", request.getMethod());
         String ipAddress = IpUtils.getIpAddress(request);
         log.info("ip: {}", ipAddress);
@@ -90,8 +92,9 @@ public class LogAspect {
         log.info("location: {}", source);
         UserAgent userAgent = IpUtils.getUserAgent(request);
         String browser = userAgent.getBrowser().toString();
-        String os = userAgent.getOs().toString();
-        log.info("ua: {}", os + " | " + browser);
+        String os = userAgent.getOperatingSystem().toString();
+        log.info("ua: {}", os);
+        log.info("browser: {}", browser);
         log.info("return: {}", result);
         log.info("excute-time : {} ms", time);
         log.info("=====================log end================================");
@@ -99,12 +102,13 @@ public class LogAspect {
         myLog.setModule(module);
         myLog.setOperation(operation);
         myLog.setClassMethod(className + "." + methodName + "()");
-        myLog.setPrams(params);
+        myLog.setParams(params);
         myLog.setUsername(UserUtil.getLoginUser());
         myLog.setRequestMethod(request.getMethod());
         myLog.setIp(ipAddress);
         myLog.setLocation(source);
-        myLog.setUa(os + " | " + browser);
+        myLog.setOs(os);
+        myLog.setBrowser(browser);
         myLog.setRes(JSONUtil.toJsonStr(result));
         myLog.setExcuteTime(String.valueOf(time));
         myLog.setCreateTime(LocalDateTime.now());

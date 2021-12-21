@@ -13,5 +13,5 @@ public class Const {
     public final static Integer STATUS_OFF = 0;
     public final static String DEFAULT_PASSWORD = "123456";
     public final static String DEFAULT_AVATAR = "https://cdn.jsdelivr.net/gh/CodeLorin/img@master/20210425/xxx.6b4667utjuc0.jfif";
-
+    public final static String REDIS_HEADER = "TOKEN_";
 }
