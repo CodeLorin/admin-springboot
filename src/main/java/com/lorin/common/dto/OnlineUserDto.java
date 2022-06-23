@@ -14,7 +14,6 @@ import java.io.Serializable;
 
 @Data
 public class OnlineUserDto implements Serializable {
-    private String tokenId;
     private String username;
     private String ip;
     private String location;

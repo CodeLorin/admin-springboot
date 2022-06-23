@@ -7,25 +7,21 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
 /**
- * <p>
- * 服务类
- * </p>
- *
- * @author lorin
- * @since 2021-12-17
+ * The interface Menu service.
  */
 public interface MenuService extends IService<Menu> {
     /**
-     * TODO
-     * @author lorin
-     * @param id
-     * @return java.util.List<com.lorin.common.dto.MenuDto>
+     * Gets user nav by id.
+     *
+     * @param id the id
+     * @return the user nav by id
      */
     List<MenuDto> getUserNavById(Long id);
+
     /**
-     * TODO
-     * @author lorin
-     * @return java.util.List<com.lorin.entity.Menu>
+     * Menu tree list list.
+     *
+     * @return the list
      */
     List<Menu> menuTreeList();
 }

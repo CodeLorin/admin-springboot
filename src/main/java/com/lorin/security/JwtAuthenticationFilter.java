@@ -58,12 +58,12 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
          * jwt非法或者过期
          */
 
-//        if (claim == null) {
-//            throw new JwtException(ErrorCode.TOKEN_ERROR.getMsg());
-//        }
-//        if (jwtUtils.isTokenExpired(claim)) {
-//            throw new JwtException(ErrorCode.TOKEN_TIMEOUT.getMsg());
-//        }
+/*       if (claim == null) {
+           throw new JwtException(ErrorCode.TOKEN_ERROR.getMsg());
+       }
+       if (jwtUtils.isTokenExpired(claim)) {
+           throw new JwtException(ErrorCode.TOKEN_TIMEOUT.getMsg());
+       }*/
         /**
          * 去redis里面查找
          */

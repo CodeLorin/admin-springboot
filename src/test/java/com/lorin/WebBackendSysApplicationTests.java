@@ -8,9 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lorin.common.Const;
 import com.lorin.common.Result;
 import com.lorin.common.dto.OnlineUserDto;
-import com.lorin.entity.Student;
-import com.lorin.service.StudentService;
-import com.lorin.utils.FaceEngineUtil;
+
 import com.lorin.utils.RedisUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,26 +29,15 @@ import java.util.stream.Collectors;
 class WebBackendSysApplicationTests {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
-    @Autowired
-    StudentService studentService;
+
     @Autowired
     RedisTemplate redisTemplate;
 
-    @Test
-    public void test2() {
-        FaceEngineUtil faceEngineUtil = new FaceEngineUtil();
-        String run = faceEngineUtil.run("face2.jpg");
-        if (!"false".equals(run)) {
-            System.out.println(run);
-            System.out.println("识别成功");
-        }
 
-//        }
-    }
 
     @Test
     public void test() {
-        System.out.println(bCryptPasswordEncoder.encode("lorin"));
+        System.out.println(bCryptPasswordEncoder.encode("123456"));
     }
 
     @Test

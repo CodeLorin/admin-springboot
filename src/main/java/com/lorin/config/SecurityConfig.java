@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * TODO
@@ -36,7 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     UserDetailServiceImpl userDetailService;
     @Autowired
     JwtLogoutSuccessHandler jwtLogoutSuccessHandler;
-
+    @Autowired
+    CaptchaFilter captchaFilter;
     @Bean
     JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager());
@@ -54,9 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-resources",
             "/swagger-ui.html",
             "/upload/**",
-            "/face",
-            "/sys/attendance/list/get",
-            "/sys/attendance/record"
+            "/captcha",
 
     };
 
@@ -104,7 +104,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  * 自定义过滤器
                  * */
                 .and()
-                .addFilter(jwtAuthenticationFilter());
+                .addFilter(jwtAuthenticationFilter())
+                .addFilterBefore(captchaFilter, UsernamePasswordAuthenticationFilter.class);
         /**
          * 跨域和csrf
          * */

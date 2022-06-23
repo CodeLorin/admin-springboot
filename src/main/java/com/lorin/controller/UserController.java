@@ -97,6 +97,8 @@ public class UserController {
     @PreAuthorize("hasAuthority('sys:user:update')")
     public Result update(@Validated @RequestBody User user) {
         user.setUpdateTime(LocalDateTime.now());
+        User updateUser = userService.getUserByUsername(user.getUsername());
+        user.setPassword(updateUser.getPassword());
         userService.updateById(user);
         return Result.success("", "更新用户成功");
     }

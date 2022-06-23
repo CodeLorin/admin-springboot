@@ -51,36 +51,13 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Autowired
     RedisTemplate redisTemplate;
 
-    public void logoutOnlineUser(String name) {
-        ObjectMapper mapper = new ObjectMapper();
-        Collection<String> keys = redisTemplate.keys(Const.REDIS_HEADER + "*");
-        if (keys == null) {
-            return;
-        }
-        for (String key : keys) {
-            Object onlineUser = redisTemplate.opsForValue().get(key);
-            if (onlineUser != null) {
-                OnlineUserDto onlineUserDto = mapper.convertValue(onlineUser, OnlineUserDto.class);
-                String username = onlineUserDto.getUsername();
-                if (username.equals(name)) {
-                    redisUtil.del(Const.REDIS_HEADER + onlineUserDto.getTokenId());
-                    return;
-                }
 
-
-            }
-
-        }
-    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         response.setContentType("application/json; charset=UTF-8");
         ServletOutputStream outputStream = response.getOutputStream();
-        /**
-         * 当前用户是否在线
-         */
-        logoutOnlineUser(authentication.getName());
+
         /**
          /**
          * 生成jwt
@@ -102,7 +79,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         onlineUserDto.setBrowser(String.valueOf(userAgent.getBrowser()));
         onlineUserDto.setOs(String.valueOf(userAgent.getOperatingSystem()));
         onlineUserDto.setLoginTime(String.valueOf(LocalDateTime.now()));
-        onlineUserDto.setTokenId(jwt);
         redisUtil.set(Const.REDIS_HEADER + jwt, onlineUserDto, expire);
         /**
          * 更新用户登录时间

@@ -6,7 +6,6 @@ import com.lorin.aop.LogAnnotation;
 import com.lorin.common.ErrorCode;
 import com.lorin.common.Result;
 import com.lorin.service.UploadService;
-import com.lorin.utils.FaceEngineUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -35,14 +34,14 @@ public class UploadController {
     private UploadService uploadService;
 
 
-    @ApiOperation(value = "人脸上传接口")
-    @LogAnnotation(module = "人脸上传上传", operation = "人脸上传接口")
-    @PostMapping("/upload/face")
+    @ApiOperation(value = "传接口")
+    @LogAnnotation(module = "上传上传", operation = "人脸上传接口")
+    @PostMapping("/upload")
     @ResponseBody
     public Result uploadFace(@RequestParam("file") MultipartFile multipartFile) throws JsonProcessingException {
         if (multipartFile.isEmpty()) {
             return Result.fail(ErrorCode.FILE_NOT_SELECT.getMsg());
         }
-        return Result.success(uploadService.uploadImg(multipartFile, "face"), "文件上传成功");
+        return Result.success(uploadService.uploadImg(multipartFile, "img"), "文件上传成功");
     }
 }
