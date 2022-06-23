@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  nginx: # 服务名称
+    image: nginx:latest
+    ports:
+      - 80:80
+    volumes:
+      - ~/project/nginx/html:/usr/share/nginx/html
+      - ~/project/nginx/nginx.conf:/etc/nginx/nginx.conf
+    privileged: true
+  mysql:
+    image: mysql:5.7.27
+    ports:
+      - 3306:3306
+    build:
+      context: .
+      dockerfile: "Dockerfile"
+    environment:
+      - MYSQL_USER=lorin
+      - MYSQL_DATABASE=admin
+      - MYSQL_PASSWORD=lorin123456
+      - MYSQL_ROOT_PASSWORD=lorin123456
+  redis:
+    image: redis:latest
+  admin-tempalte:
+    image: admin_tempalte:latest
+    build: . # 表示以当前目录下的Dockerfile开始构建镜像
+    ports:
+      - 8888:8888
+    depends_on:
+      - mysql
+      - redis
