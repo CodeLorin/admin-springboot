@@ -1,7 +1,7 @@
 FROM java:8
 
 EXPOSE 8888
-COPY ./admin.sql /docker-entrypoint-initdb.d/
+
 ADD web-backend-sys-0.0.1-SNAPSHOT.jar app.jar
 RUN bash -c 'touch /app.jar'
 
