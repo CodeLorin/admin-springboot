@@ -13,9 +13,6 @@ services:
     image: mysql:5.7.27
     ports:
       - 3306:3306
-    build:
-      context: .
-      dockerfile: "Dockerfile"
     environment:
       - MYSQL_USER=lorin
       - MYSQL_DATABASE=admin
